@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connect | Random Video Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div id="lobby">
+    <div class="lobby-content">
+      <h1>🎥 Connect</h1>
+      <p>Find a random partner for a video call and chat.</p>
+      <div id="statusMessage" class="status-idle">Idle. Find a partner to start.</div>
+      <button id="startCallButton">🎯 Find Partner</button>
+    </div>
+  </div>
+
+  <div id="app-container">
+    <div id="video-container">
+      <!-- Top-Left Menu -->
+      <div id="menuWrapper">
+        <button id="menuToggleBtn">⋯</button>
+        <div id="menuOptions" class="hidden">
+          <button id="muteBtn">🔇 Mute</button>
+          <button id="unmuteBtn">🔊 Sound</button>
+          <button id="blockBtn">🚫 Block</button>
+        </div>
+      </div>
+
+      <!-- End Call Button -->
+      <button id="endCallButton">⛔ End Call</button>
+
+      <div class="video-wrapper">
+        <video id="localVideo" autoplay muted playsinline></video>
+        <div class="video-label">You</div>
+      </div>
+      <div class="video-wrapper">
+        <video id="remoteVideo" autoplay playsinline></video>
+        <div class="video-label">Partner</div>
+        <div id="remoteVideoPlaceholder" class="placeholder">Waiting for partner...</div>
+      </div>
+    </div>
+
+    <div id="chat-container">
+      <div class="chat-header">
+        <h2>Chat</h2>
+        <button id="closeChatBtn" class="mobile-only">✖</button>
+      </div>
+      <div id="messagesDisplay" class="messages-display"></div>
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Type a message..." />
+        <button id="sendChatButton">Send</button>
+      </div>
+    </div>
+
+    <!-- Chat toggle button -->
+    <button id="toggleChatBtn">💬 Chat</button>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
