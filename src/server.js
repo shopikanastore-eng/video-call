@@ -1,5 +1,7 @@
 import express from 'express';
 import http from 'http';
+import https from 'https';
+import fs from 'fs';
 import { Server } from 'socket.io';
 import connectDB from './config/db.js';
 import socketHandler from './socket/index.js';
@@ -10,10 +12,34 @@ import User from './models/user.js';
 import Room from './models/room.js';
 
 const app = express();
-const server = http.createServer(app);
 
-// ✅ Socket.IO only on custom path
-const io = new Server(server);
+/* ---------------------------------------------------
+   🔐 Load SSL Certificates
+---------------------------------------------------- */
+const SSL_DOMAIN = "livecall.freopayloan.com"; 
+
+const httpsOptions = {
+  key: fs.readFileSync(`/etc/letsencrypt/live/${SSL_DOMAIN}/privkey.pem`),
+  cert: fs.readFileSync(`/etc/letsencrypt/live/${SSL_DOMAIN}/fullchain.pem`)
+};
+
+/* ---------------------------------------------------
+   🌐 Create HTTP (80) → HTTPS (443) redirect server
+---------------------------------------------------- */
+const httpServer = http.createServer((req, res) => {
+  res.writeHead(301, {
+    "Location": "https://" + req.headers.host + req.url
+  });
+  res.end();
+});
+
+/* ---------------------------------------------------
+   🔐 Create HTTPS server for your main app + Socket.IO
+---------------------------------------------------- */
+const httpsServer = https.createServer(httpsOptions, app);
+
+// Initialize Socket.IO on HTTPS
+const io = new Server(httpsServer);
 
 // Connect to MongoDB
 connectDB();
@@ -21,13 +47,15 @@ connectDB();
 // Middleware
 app.use(express.json());
 
-// Serve frontend
+// Serve static files
 app.use("/", express.static('public'));
 
 // Attach socket handler
 socketHandler(io);
 
-// 🕒 Cron job runs every minute
+/* ---------------------------------------------------
+   🕒 CRON JOB: Unblock users + remove old rooms
+---------------------------------------------------- */
 cron.schedule('* * * * *', async () => {
   try {
     const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
@@ -72,7 +100,9 @@ cron.schedule('* * * * *', async () => {
   }
 });
 
-// API endpoint to delete rooms
+/* ---------------------------------------------------
+   🔧 API: Delete all rooms
+---------------------------------------------------- */
 app.post("/delete-all-rooms", async (req, res) => {
   try {
     if (req?.body?.number == process.env.number) {
@@ -86,10 +116,17 @@ app.post("/delete-all-rooms", async (req, res) => {
   }
 });
 
-const PORT = 3000;
-server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-  // console.log(`📡 Socket.IO ONLY at: ws://localhost:${PORT}/vcall/api/socket.io`);
+/* ---------------------------------------------------
+   🚀 Start Servers
+---------------------------------------------------- */
+const HTTP_PORT = 80;
+const HTTPS_PORT = 443;
+
+httpServer.listen(HTTP_PORT, () => {
+  console.log(`🌍 HTTP redirect server running on port ${HTTP_PORT}`);
 });
 
-
+httpsServer.listen(HTTPS_PORT, () => {
+  console.log(`🔐 HTTPS server running on port ${HTTPS_PORT}`);
+  console.log(`📡 Socket.IO running securely on wss://livecall.freopayloan.com`);
+});
