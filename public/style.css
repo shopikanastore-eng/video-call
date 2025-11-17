@@ -8,6 +8,12 @@
   --border-color: #333333;
   --error-color: #e53935;
   --success-color: #43a047;
+
+  --primary-gradient: linear-gradient(135deg, #a020f0, #8a2be2);
+  --text-color: #ffffff;
+  --button-bg: #ffffff;
+  --button-text: #a020f0;
+  --border-color-lv: #ffffff50;
 }
 
 * {
@@ -61,27 +67,27 @@ body.in-call #lobby {
   visibility: hidden;
 }
 
-.lobby-content {
+/* .lobby-content {
   text-align: center;
   padding: 2rem;
-}
+} */
 
-.lobby-content h1 {
+/* .lobby-content h1 {
   font-size: 4rem;
   font-weight: 700;
   background: -webkit-linear-gradient(45deg, var(--primary-accent), #c788f6);
   --webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 0.5rem;
-}
+} */
 
-.lobby-content p {
+/* .lobby-content p {
   font-size: 1.2rem;
   color: var(--text-secondary);
   margin-bottom: 2rem;
-}
+} */
 
-#statusMessage {
+/* #statusMessage {
   margin-bottom: 2rem;
   font-size: 1rem;
   padding: 0.5rem 1rem;
@@ -91,7 +97,7 @@ body.in-call #lobby {
   min-height: 38px;
   display: inline-flex;
   align-items: center;
-}
+} */
 
 #statusMessage.status-searching {
   color: var(--primary-accent);
@@ -501,9 +507,9 @@ button:disabled {
     display: none;
   }
 
-  .lobby-content h1 {
+  /* .lobby-content h1 {
     font-size: 3rem;
-  }
+  } */
 
   .chat-header h2 {
     font-size: 1.2rem;
@@ -540,4 +546,199 @@ button:disabled {
     height: 100%;
     position: relative;
   }
+}
+
+
+
+
+
+
+/* New code added :::::: */
+
+
+/* :root {
+  --primary-gradient: linear-gradient(135deg, #a020f0, #8a2be2);
+  --text-color: #ffffff;
+  --button-bg: #ffffff;
+  --button-text: #a020f0;
+  --border-color: #ffffff50;
+} */
+
+.lobby {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--primary-gradient);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.lobby-content {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  text-align: center;
+}
+
+.lv-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.lv-marquee-wrapper {
+  overflow: hidden;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.lv-marquee {
+  display: flex;
+  width: max-content;
+  gap: 12px;
+  animation: marquee-left 25s linear infinite;
+}
+
+.lv-marquee.lv-reverse {
+  animation: marquee-right 25s linear infinite;
+}
+
+.lv-marquee img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-color-lv);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.lv-marquee img:hover {
+  transform: scale(1.1);
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.lv-stats {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 30px 0 10px;
+}
+
+.lv-subtext {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  opacity: 0.9;
+}
+
+.lv-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.lv-buttons button {
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.lv-btn-match {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+.lv-btn-match:hover {
+  background: #f0f0f0;
+}
+
+.lv-btn-advice {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.lv-btn-advice:hover {
+  background: white;
+  color: #a020f0;
+}
+
+@media (max-width: 480px) {
+  .lv-title {
+    font-size: 1.6rem;
+  }
+
+  .lv-marquee img {
+    width: 75px;
+    height: 75px;
+  }
+
+  .lv-stats {
+    font-size: 1.6rem;
+  }
+
+  .lv-subtext {
+    font-size: 0.9rem;
+  }
+
+  .lv-buttons button {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}
+
+
+
+
+ .chat-btn {
+  position: relative;
+  padding-right: 20px; /* Give space for the red dot */
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.chat-btn::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  display: none;
+}
+
+.chat-btn.show-dot::after {
+  display: block;
 }

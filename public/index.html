@@ -15,10 +15,84 @@
 
   <div id="lobby">
     <div class="lobby-content">
-      <h1>🎥 Connect</h1>
-      <p>Find a random partner for a video call and chat.</p>
-      <div id="statusMessage" class="status-idle">Idle. Find a partner to start.</div>
-      <button id="startCallButton">🎯 Find Partner</button>
+
+      <div class="lv-container">
+        <h1 class="lv-title">Live video Calls</h1>
+
+        <!-- Marquee Row 1 -->
+        <div class="lv-marquee-wrapper">
+          <div class="lv-marquee">
+            <!-- repeated images for seamless scroll -->
+            <img src="https://randomuser.me/api/portraits/women/1.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/2.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/3.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/4.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/21.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/5.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/6.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/1.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/2.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/3.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/4.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/21.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/5.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/6.jpg" />
+          </div>
+        </div>
+
+        <!-- Marquee Row 2 (Reverse) -->
+        <div class="lv-marquee-wrapper">
+          <div class="lv-marquee lv-reverse">
+            <img src="https://randomuser.me/api/portraits/women/7.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/8.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/9.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/10.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/11.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/12.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/19.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/7.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/8.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/9.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/10.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/11.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/12.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/19.jpg" />
+          </div>
+        </div>
+
+        <!-- Marquee Row 3 -->
+        <div class="lv-marquee-wrapper">
+          <div class="lv-marquee">
+            <img src="https://randomuser.me/api/portraits/women/13.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/20.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/14.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/15.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/16.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/17.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/18.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/13.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/20.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/14.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/15.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/16.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/17.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/18.jpg" />
+          </div>
+        </div>
+
+        <!-- Text and Buttons -->
+        <div id="liveStats" class="lv-stats">2345</div>
+        <div class="lv-subtext">Meet and talk with girls in real-time!</div>
+        <div class="lv-subtext">Find your dream girl right now!</div>
+
+        <div class="lv-buttons">
+          <button id="startCallButton" class="lv-btn-match">Random Match</button>
+          <div id="statusMessage" class="status-idle">Video Call Advice</div>
+        </div>
+      </div>
+
+      <!-- <div id="statusMessage" class="status-idle">Idle. Find a partner to start.</div>
+      <button id="startCallButton">🎯 Find Partner</button> -->
     </div>
   </div>
 
@@ -61,11 +135,13 @@
     </div>
 
     <!-- Chat toggle button -->
-    <button id="toggleChatBtn">💬 Chat</button>
+    <button id="toggleChatBtn" class="chat-btn">💬 Chat</button>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
 </body>
 
+
 </html>
+

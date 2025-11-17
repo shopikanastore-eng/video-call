@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const socket = io();
-
+    
     const body = document.body;
     const localVideo = document.getElementById('localVideo');
     const remoteVideo = document.getElementById('remoteVideo');
@@ -33,6 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
+    const statsEl = document.getElementById('liveStats');
+    let currentValue = parseInt(statsEl.textContent);
+
+    setInterval(() => {
+        const change = Math.floor(Math.random() * 6) + 10; // 10 to 15
+        const addOrSubtract = Math.random() < 0.5 ? -1 : 1; // randomly + or -
+        currentValue += change * addOrSubtract;
+
+        // Optional: prevent negative value
+        if (currentValue < 0) currentValue = 0;
+
+        statsEl.textContent = currentValue;
+    }, 2000); // every 2 seconds
 
     // === MENU LOGIC ===
     let isMuted = false;
@@ -59,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     blockBtn.addEventListener('click', () => {
         menuOptions.classList.add('hidden');
-        socket.emit('block-user', { partnerId: partnerSocketId });
+        socket.emit('block-user', { partnerId: partnerSocketId, deviceId: getUniqueBrowserId() });
         // alert("You have blocked this user.");
     });
 
@@ -73,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatContainer.classList.add('open');
         toggleChatBtn.classList.add('displaynone');
         body.classList.add('chat-open');
+        document.getElementById("toggleChatBtn").classList.remove("show-dot");
     });
 
     closeChatBtn?.addEventListener('click', () => {
@@ -130,6 +144,17 @@ document.addEventListener('DOMContentLoaded', () => {
     startCallButton.addEventListener('click', async () => {
         try {
             setSearchingState();
+            statusMessage.textContent = 'Checking permissions...';
+
+            const cameraPermission = await navigator.permissions.query({ name: 'camera' });
+            const micPermission = await navigator.permissions.query({ name: 'microphone' });
+
+            if (cameraPermission.state === 'denied' || micPermission.state === 'denied') {
+                alert('Permission denied. Please enable camera and microphone access in your browser settings.');
+                setLobbyState();
+                return;
+            }
+
             statusMessage.textContent = 'Requesting camera/mic...';
             localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
             localVideo.srcObject = localStream;
@@ -158,6 +183,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     socket.on('matched', async (data) => {
+        if (data?.isMessage) {
+            alert(data?.message)
+        }
         partnerSocketId = data.partnerId;
         isCaller = data.isCaller;
         setInCallState();
@@ -210,6 +238,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.on('chat-message', (data) => {
         if (data.senderId === partnerSocketId) {
+            if (!chatContainer?.classList.contains('open')) {
+                document.getElementById("toggleChatBtn").classList.add("show-dot");
+            }
             addChatMessage(data.message, 'received');
         }
     });
@@ -228,6 +259,9 @@ document.addEventListener('DOMContentLoaded', () => {
         hangUp();
     });
 
+    socket.on('reset-page', (data) => {
+        hangUp();
+    });
 
 
     async function createPeerConnection() {
@@ -293,3 +327,4 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessage.textContent = 'HTTPS required.';
     }
 });
+
