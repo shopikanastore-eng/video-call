@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const muteBtn = document.getElementById('muteBtn');
     const unmuteBtn = document.getElementById('unmuteBtn');
     const blockBtn = document.getElementById('blockBtn');
-
+    const adslobby = document.getElementById('ads_lobby');
+    
     let localStream;
     let peerConnection;
     let partnerSocketId;
@@ -106,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sendChatButton.disabled = true;
         messagesDisplay.innerHTML = '';
         remoteVideoPlaceholder.style.display = 'block';
+        adslobby.style.display = 'block';
     }
 
     function setSearchingState() {
@@ -122,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         endCallButton.disabled = false;
         chatInput.disabled = false;
         sendChatButton.disabled = false;
+        adslobby.style.display = 'none';
     }
 
     function addChatMessage(message, type) {
@@ -327,4 +330,5 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessage.textContent = 'HTTPS required.';
     }
 });
+
 
