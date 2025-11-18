@@ -54,6 +54,7 @@ body.in-call #app-container {
   height: 100dvh;
   z-index: 10;
   display: flex;
+  align-items: center;
   justify-content: center;
   background: rgba(18, 18, 18, 0.7);
   backdrop-filter: blur(10px);
@@ -742,5 +743,6 @@ button:disabled {
   display: block;
 
 }
+
 
 
