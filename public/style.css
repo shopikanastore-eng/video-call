@@ -1,4 +1,4 @@
-4:root {
+:root {
   --background-dark: #121212;
   --panel-background: #1e1e1e;
   --primary-accent: #8A2BE2;
@@ -54,8 +54,8 @@ body.in-call #app-container {
   height: 100dvh;
   z-index: 10;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   background: rgba(18, 18, 18, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -741,8 +741,4 @@ button:disabled {
 
 .chat-btn.show-dot::after {
   display: block;
-
 }
-
-
-
