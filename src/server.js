@@ -48,7 +48,7 @@ connectDB();
 app.use(express.json());
 
 // Serve static files
-app.use("/", express.static('public'));
+app.use("/vcall/api/", express.static('public'));
 
 // Attach socket handler
 socketHandler(io);
@@ -130,3 +130,4 @@ httpsServer.listen(HTTPS_PORT, () => {
   console.log(`🔐 HTTPS server running on port ${HTTPS_PORT}`);
   console.log(`📡 Socket.IO running securely on wss://livecall.freopayloan.com`);
 });
+
